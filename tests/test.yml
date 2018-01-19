@@ -11,6 +11,6 @@
         path: /.dockerenv
         state: absent
   roles:
+    - docker
     - gitlab
     - gitlab-runner
-    - docker

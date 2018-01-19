@@ -15,6 +15,9 @@ script:
   # Run tests.
   - ${PWD}/tests/test.sh
 
+  # Test whether Docker is running correctly.
+  - 'docker exec --tty ${container_id} docker run hello-world'
+
   # Make sure GitLab is running.
   - >
     docker exec ${container_id} curl --insecure -s --head http://localhost/users/password/new
@@ -24,7 +27,4 @@ script:
 
   # Make sure GitLab Runner is running.
   - 'docker exec --tty ${container_id} env TERM=xterm gitlab-runner list'
-
-  # Test whether Docker is running correctly.
-  - 'docker exec --tty ${container_id} docker run hello-world'
 
