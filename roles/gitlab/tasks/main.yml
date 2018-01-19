@@ -1,0 +1,69 @@
+---
+- name: Check if GitLab configuration file already exists.
+  stat:
+    path: /etc/gitlab/gitlab.rb
+  register: gitlab_config_file
+
+- name: Check if GitLab is already installed.
+  stat:
+    path: /usr/bin/gitlab-ctl
+  register: gitlab_file
+
+# Install GitLab and its dependencies.
+- name: Install GitLab dependencies.
+  yum:
+    name: "{{ item }}"
+    state: present
+  register: install_packages
+  until: install_packages|success
+  retries: 5
+  delay: 2
+  with_items:
+    - openssh-server
+    - postfix
+    - curl
+    - openssl
+    - tzdata
+
+- name: Download GitLab repository installation script.
+  get_url:
+    url: "{{ gitlab_repository_installation_script_url }}"
+    dest: /tmp/gitlab_install_repository.sh
+    validate_certs: "{{ gitlab_download_validate_certs }}"
+  when: (gitlab_file.stat.exists == false)
+
+- name: Install GitLab repository
+  command: bash /tmp/gitlab_install_repository.sh
+  when: (gitlab_file.stat.exists == false)
+
+- name: Define the Gitlab package name.
+  set_fact:
+    gitlab_package_name: "{{ gitlab_edition }}{{ gitlab_package_version_separator }}{{ gitlab_version }}"
+  when: gitlab_version != ''
+
+- name: Install GitLab
+  yum:
+    name: "{{ gitlab_package_name | default(gitlab_edition) }}"
+    state: present
+  register: install_packages
+  until: install_packages|success
+  retries: 5
+  delay: 2
+  when: (gitlab_file.stat.exists == false)
+
+# Start and configure GitLab. Sometimes the first run fails, but after that,
+# restarts fix problems, so ignore failures on this run.
+- name: Reconfigure GitLab (first run).
+  command: >
+    gitlab-ctl reconfigure
+    creates=/var/opt/gitlab/bootstrapped
+  failed_when: false
+
+- name: Copy GitLab configuration file.
+  template:
+    src: gitlab.rb.j2
+    dest: /etc/gitlab/gitlab.rb
+    owner: root
+    group: root
+    mode: 0600
+  notify: restart gitlab

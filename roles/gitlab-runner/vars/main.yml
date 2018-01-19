@@ -1,0 +1,13 @@
+---
+gitlab_runner_package_version_separator: '-'
+gitlab_runner_repository_installation_script_url: "https://packages.gitlab.com/install/repositories/runner/{{ gitlab_runner_package_name }}/script.rpm.sh"
+
+gitlab_runner_coordinator_url: 'http://192.168.33.10'
+gitlab_runner_registration_token: 'zrSaLxNrhSKn_sF6grUC'
+gitlab_runner_description: 'GitLab Runner with Docker socket binding'
+gitlab_runner_docker_image: 'docker:latest'
+gitlab_runner_executor: 'docker'
+gitlab_runner_tags:
+  - docker
+gitlab_runner_docker_volumes:
+  - "/var/run/docker.sock:/var/run/docker.sock"

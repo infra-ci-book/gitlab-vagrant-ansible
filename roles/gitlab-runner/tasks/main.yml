@@ -1,0 +1,62 @@
+---
+- name: Check if GitLab Runner configuration file already exists.
+  stat:
+    path: /etc/gitlab-runner/config.toml
+  register: gitlab_runner_config_file
+
+- name: Check if GitLab Runner is already installed.
+  stat:
+    path: /bin/gitlab-runner
+  register: gitlab_runner_file
+
+# Install GitLab Runner and its dependencies.
+- name: Download GitLab Runner repository installation script.
+  get_url:
+    url: "{{ gitlab_runner_repository_installation_script_url }}"
+    dest: /tmp/gitlab_runner_install_repository.sh
+    validate_certs: "{{ gitlab_download_validate_certs }}"
+  when: (gitlab_runner_file.stat.exists == false)
+
+- name: Install GitLab Runner repository
+  command: bash /tmp/gitlab_runner_install_repository.sh
+  when: (gitlab_runner_file.stat.exists == false)
+
+- name: Define the Gitlab Runner package name.
+  set_fact:
+    gitlab_runner_versioned_package_name: "{{ gitlab_runner_package_name }}{{ gitlab_runner_package_version_separator }}{{ gitlab_runner_version }}"
+  when: gitlab_runner_version != ''
+
+- name: Install GitLab Runner
+  yum:
+    name: "{{ gitlab_runner_versioned_package_name | default(gitlab_runner_package_name) }}"
+    state: present
+  register: install_packages
+  until: install_packages|success
+  retries: 5
+  delay: 2
+  when: (gitlab_runner_file.stat.exists == false)
+
+- name: List configured runners
+  command: gitlab-runner list
+  register: configured_runners
+  changed_when: False
+
+- name: Register runner to GitLab
+  command: gitlab-runner register >
+    --non-interactive
+    --url '{{ gitlab_runner_coordinator_url }}'
+    --registration-token '{{ gitlab_runner_registration_token }}'
+    --description '{{ gitlab_runner_description }}'
+    --tag-list '{{ gitlab_runner_tags | join(",") }}'
+    --executor '{{ gitlab_runner_executor }}'
+    --locked='{{gitlab_runner_locked}}'
+    --docker-image '{{ gitlab_runner_docker_image }}'
+    {% if gitlab_runner_docker_volumes is defined %}
+    --docker-volumes "{{ gitlab_runner_docker_volumes | join('" "') }}"
+    {% endif %}
+    --ssh-user '{{ gitlab_runner_ssh_user }}'
+    --ssh-host '{{ gitlab_runner_ssh_host }}'
+    --ssh-port '{{ gitlab_runner_ssh_port }}'
+    --ssh-password '{{ gitlab_runner_ssh_password }}'
+    --ssh-identity-file '{{ gitlab_runner_ssh_identity_file }}'
+  when: configured_runners.stderr.find('\n' + gitlab_runner_description) == -1

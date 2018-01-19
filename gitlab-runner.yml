@@ -1,0 +1,9 @@
+---
+- name: Install GitLab Runner
+  gather_facts: True
+  hosts: "gitlab-runner"
+  become: True
+  roles:
+    - docker
+    - gitlab-runner
+

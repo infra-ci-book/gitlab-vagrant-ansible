@@ -1,0 +1,27 @@
+---
+services: docker
+
+env:
+  - distro: centos7
+
+script:
+  # Configure test script so we can run extra tests after playbook is run.
+  - export container_id=$(date +%s)
+  - export cleanup=false
+
+  # Download test shim.
+  - chmod +x ${PWD}/tests/test.sh
+
+  # Run tests.
+  - ${PWD}/tests/test.sh
+
+  # Make sure GitLab is running.
+  - >
+    docker exec ${container_id} curl --insecure -s --head http://localhost/users/password/new
+    | sed -n '1p' | grep -q '200'
+    && (echo 'Status code 200 test: pass' && exit 0)
+    || (echo 'Status code 200 test: fail' && exit 1)
+
+  # Test whether Docker is running correctly.
+  - docker exec --tty ${container_id} docker run hello-world
+

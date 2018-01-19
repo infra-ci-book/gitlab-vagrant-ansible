@@ -1,0 +1,25 @@
+---
+# General config.
+gitlab_external_url: "http://localhost"
+gitlab_git_data_dir: "/var/opt/gitlab/git-data"
+gitlab_edition: "gitlab-ce"
+gitlab_version: ''
+gitlab_backup_path: "/var/opt/gitlab/backups"
+
+# SSL Configuration.
+gitlab_redirect_http_to_https: "true"
+gitlab_ssl_certificate: "/etc/gitlab/ssl/gitlab.crt"
+gitlab_ssl_certificate_key: "/etc/gitlab/ssl/gitlab.key"
+
+# SSL Self-signed Certificate Configuration.
+gitlab_create_self_signed_cert: "true"
+gitlab_self_signed_cert_subj: "/C=US/ST=Missouri/L=Saint Louis/O=IT/CN=gitlab"
+
+# Probably best to leave this as the default, unless doing testing.
+gitlab_restart_handler_failed_when: 'gitlab_restart.rc != 0'
+
+# Optional settings.
+gitlab_time_zone: "UTC"
+gitlab_backup_keep_time: "604800"
+gitlab_download_validate_certs: yes
+
