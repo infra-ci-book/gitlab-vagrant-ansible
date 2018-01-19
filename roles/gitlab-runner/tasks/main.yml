@@ -59,4 +59,6 @@
     --ssh-port '{{ gitlab_runner_ssh_port }}'
     --ssh-password '{{ gitlab_runner_ssh_password }}'
     --ssh-identity-file '{{ gitlab_runner_ssh_identity_file }}'
-  when: configured_runners.stderr.find('\n' + gitlab_runner_description) == -1
+  when:
+    - configured_runners.stderr.find('\n' + gitlab_runner_description) == -1
+    - run_gitlab_runner_register_command

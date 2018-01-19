@@ -35,3 +35,6 @@ gitlab_runner_locked: 'false'
 
 # Optional settings.
 gitlab_download_validate_certs: yes
+
+# Probably best to set true as the default, unless doing testing.
+run_gitlab_runner_register_command: true
