@@ -12,4 +12,5 @@
         state: absent
   roles:
     - gitlab
+    - gitlab-runner
     - docker
