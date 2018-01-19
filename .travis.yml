@@ -23,7 +23,7 @@ script:
     || (echo 'Status code 200 test: fail' && exit 1)
 
   # Make sure GitLab Runner is running.
-  - 'docker exec --tty ${container_id} env TERM=xterm /bin/gitlab-runner list'
+  - 'docker exec --tty ${container_id} env TERM=xterm  which gitlab-runner'
 
   # Test whether Docker is running correctly.
   - 'docker exec --tty ${container_id} docker run hello-world'
