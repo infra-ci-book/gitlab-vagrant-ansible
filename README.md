@@ -69,11 +69,15 @@ ansible-playbook -i hosts/gitlab gitlab.yml
 ```
 
 ### Install GitLab Runner
-1. Access to `http://192.168.33.10` and configure password to login.
+1. Access to `http://192.168.33.10` and configure root password to login.
+
+![](https://raw.githubusercontent.com/infra-ci-book/gitlab-vagrant-ansible/master/images/01.png)
 
 1. Grab the shared-Runner token on the `admin/runners` page.
 
-1. Edit 'hosts/gitlab-runner/inventory' and configure shared-Runner token in `[gitlab-runner:vars]` section.
+![](https://raw.githubusercontent.com/infra-ci-book/gitlab-vagrant-ansible/master/images/21.png)
+
+1. Edit 'hosts/gitlab-runner/inventory' and configure shared-Runner token in `[gitlab-runner:vars]` section. e.g.) pVkCNazutHmHX6xhy6-v 
 
     ```
     [gitlab-runner:vars]
@@ -86,6 +90,8 @@ ansible-playbook -i hosts/gitlab gitlab.yml
     ```
     ansible-playbook -i hosts/gitlab-runner gitlab-runner.yml
     ```
+![](https://raw.githubusercontent.com/infra-ci-book/gitlab-vagrant-ansible/master/images/03.png)
+
 
 ## License
 
