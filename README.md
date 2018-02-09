@@ -75,7 +75,7 @@ ansible-playbook -i hosts/gitlab gitlab.yml
 
 1. Grab the shared-Runner token on the `admin/runners` page.
 
-![](https://raw.githubusercontent.com/infra-ci-book/gitlab-vagrant-ansible/master/images/21.png)
+![](https://raw.githubusercontent.com/infra-ci-book/gitlab-vagrant-ansible/master/images/02.png)
 
 1. Edit 'hosts/gitlab-runner/inventory' and configure shared-Runner token in `[gitlab-runner:vars]` section. e.g.) pVkCNazutHmHX6xhy6-v 
 
