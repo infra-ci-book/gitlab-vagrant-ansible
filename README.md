@@ -71,7 +71,7 @@ ansible-playbook -i hosts/gitlab gitlab.yml
 ### Install GitLab Runner
 1. Access to `http://192.168.33.10` and configure password to login.
 
-1. Grab the shared-Runner token on the `admin/runners` page
+1. Grab the shared-Runner token on the `admin/runners` page.
 
 1. Edit 'hosts/gitlab-runner/inventory' and configure shared-Runner token in `[gitlab-runner:vars]` section.
 
