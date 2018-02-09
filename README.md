@@ -57,7 +57,8 @@ At first, booting Vagrant VMs for GitLab and GitLab Runner is required.
 cd ~/vagrant/infra-ci
 vagrant up gitlab
 vagrant up gitlab-runner
-    ```
+```
+
 ### Install GitLab
 Running `gitlab.yml` to install GitLab to gitlab machine.
 
