@@ -2,8 +2,8 @@
 gitlab_runner_package_version_separator: '-'
 gitlab_runner_repository_installation_script_url: "https://packages.gitlab.com/install/repositories/runner/{{ gitlab_runner_package_name }}/script.rpm.sh"
 
-gitlab_runner_coordinator_url: 'http://localhost'
-gitlab_runner_registration_token: ''
+#gitlab_runner_coordinator_url: 'http://localhost'
+#gitlab_runner_registration_token: ''
 gitlab_runner_description: 'GitLab Runner with Docker socket binding'
 gitlab_runner_docker_image: 'docker:latest'
 gitlab_runner_executor: 'docker'
