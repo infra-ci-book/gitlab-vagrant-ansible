@@ -63,13 +63,14 @@ vagrant up gitlab-runner
 Running `gitlab.yml` to install GitLab to gitlab machine.
 
 ```
+cd ~/
 git clone https://github.com/infra-ci-book/gitlab-vagrant-ansible.git
 cd gitlab-vagrant-ansible
 ansible-playbook -i hosts/gitlab gitlab.yml
 ```
 
 ### Install GitLab Runner
-1. Access to `http://192.168.33.10` and configure root password to login.
+1. Access to `http://192.168.33.10` or `http://[your host ip address]` and configure root password to login.
 
     ![](https://raw.githubusercontent.com/infra-ci-book/gitlab-vagrant-ansible/master/images/01.png)
 
@@ -77,12 +78,14 @@ ansible-playbook -i hosts/gitlab gitlab.yml
 
     ![](https://raw.githubusercontent.com/infra-ci-book/gitlab-vagrant-ansible/master/images/02.png)
 
-1. Edit 'hosts/gitlab-runner/inventory' and configure shared-Runner token in `[gitlab-runner:vars]` section. e.g.) pVkCNazutHmHX6xhy6-v 
+1. Edit 'hosts/gitlab-runner/inventory' and configure shared-Runner token in `[gitlab-runner:vars]` section.
+
+   e.g.) `pVkCNazutHmHX6xhy6-v` is the token above example.
 
     ```
     [gitlab-runner:vars]
     # ...
-    gitlab_runner_registration_token='xxxxxxxxxxxxx'
+    gitlab_runner_registration_token='pVkCNazutHmHX6xhy6-v'
     ```
 
 1. Running `gitlab-runner.yml` to install GitLab Runner to gitlab-runner machine.
