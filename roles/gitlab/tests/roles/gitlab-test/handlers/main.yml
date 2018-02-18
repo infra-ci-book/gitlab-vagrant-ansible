@@ -1,0 +1,6 @@
+---
+- name: Output GitLab environment info
+  copy:
+    content: |
+      {{ gitlab_info_result.stdout }}
+    dest: "{{ gitlab_env_info_file }}"

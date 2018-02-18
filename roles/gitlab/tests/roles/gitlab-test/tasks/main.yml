@@ -8,7 +8,10 @@
 
 - name: Check installation binary
   command: gitlab-rake gitlab:env:info
+  args:
+    creates: "{{ gitlab_env_info_file }}"
   register: gitlab_info_result
+  notify: Output GitLab environment info
 
 - name: Gathering process status
   command: gitlab-ctl status
