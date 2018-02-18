@@ -1,0 +1,21 @@
+---
+- name: Check service status
+  command: gitlab-runner status
+
+- name: Check configuration file for registered runners
+  wait_for:
+    path: /etc/gitlab-runner/config.toml
+    search_regex: 'url = "{{ gitlab_runner_coordinator_url }}"'
+    timeout: 5
+    msg: "Check GitLab Runner Configration file"
+
+- name: Gathering status info for registered runners
+  command: gitlab-runner verify
+  register: gitlab_runner_status_result
+  ignore_errors: True 
+
+- name: Check registered runners
+  assert:
+    that: "'alive' in item"
+    msg: "register runner is down"
+  with_items: "{{ gitlab_runner_status_result.stderr_lines|select('match', 'Verifying runner')|list }}"

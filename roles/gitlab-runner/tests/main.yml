@@ -1,0 +1,7 @@
+---
+- name: Test GitLab Runner
+  gather_facts: True
+  hosts: "gitlab-runner"
+  become: True
+  roles:
+    - gitlab-runner-test
