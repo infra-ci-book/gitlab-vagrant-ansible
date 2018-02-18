@@ -1,0 +1,4 @@
+---
+gitlab_active_ports:
+  - { name: 'nginx', port: 80 }
+  - { name: 'unicorn', port: 8080 }

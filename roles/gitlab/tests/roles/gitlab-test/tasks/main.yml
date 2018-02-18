@@ -1,0 +1,27 @@
+---
+- name: Check configration file
+  wait_for:
+    path: /etc/gitlab/gitlab.rb
+    search_regex: 'external_url "{{ gitlab_external_url }}"'
+    timeout: 5
+    msg: "Check GitLab Configration file"
+
+- name: Check installation binary
+  command: gitlab-rake gitlab:env:info
+  register: gitlab_info_result
+
+- name: Gathering process status
+  command: gitlab-ctl status
+  register: gitlab_process_status_result
+  ignore_errors: True
+
+- name: Check process status
+  assert:
+    that: "'down:' not in item"
+    msg: "Some GitLab process are down."
+  with_items: "{{ gitlab_process_status_result.stdout_lines }}"
+
+- name: Check process ports
+  wait_for:
+    port: "{{ item.port }}"
+  with_items: "{{ gitlab_active_ports }}"
