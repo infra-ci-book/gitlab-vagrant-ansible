@@ -1,0 +1,28 @@
+---
+#image: ansible/centos7-ansible
+image: centos:centos7
+stages:
+ - test
+ - build
+
+before_script:
+ - export LANG=C
+ - export http_proxy=http://proxy.jpn.hp.com:8080
+ - export https_proxy=http://proxy.jpn.hp.com:8080
+ - yum install -y "https://releases.ansible.com/ansible/rpm/release/epel-7-x86_64/ansible-2.4.3.0-1.el7.ans.noarch.rpm"
+
+gitlab_test:
+  stage: test
+  script:
+   - ansible-playbook --version
+   - ansible-playbook -i hosts/gitlab/inventory ./tests/gitlab_test.yml --syntax-check
+   - ansible-playbook -i hosts/gitlab/inventory ./tests/gitlab_test.yml -vv
+  tags:
+   - docker
+
+gitlab_build:
+  stage: build
+  script:
+   - ansible-playbook --help
+  tags:
+   - docker

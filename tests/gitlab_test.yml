@@ -1,0 +1,22 @@
+---
+- name: Test GitLab CE
+  hosts: localhost
+  connection: local
+  become: True
+  vars:
+    gitlab_restart_handler_failed_when: false
+    run_gitlab_runner_register_command: false
+
+  pre_tasks:
+    - name: Remove the .dockerenv file so GitLab Omnibus doesn't get confused.
+      file:
+        path: /.dockerenv
+        state: absent
+
+  roles:
+    - gitlab
+
+  post_tasks:
+    - name: GitLab Unit Test
+      include_role:
+        name: gitlab-test

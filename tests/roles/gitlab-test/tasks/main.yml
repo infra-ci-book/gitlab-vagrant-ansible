@@ -4,7 +4,6 @@
     path: /etc/gitlab/gitlab.rb
     search_regex: 'external_url "{{ gitlab_external_url }}"'
     timeout: 5
-    msg: "Check GitLab Configration file"
 
 - name: Check installation binary
   command: gitlab-rake gitlab:env:info
