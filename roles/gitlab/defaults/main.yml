@@ -1,6 +1,7 @@
 ---
 # General config.
 gitlab_external_url: "http://localhost"
+gitlab_registry_external_url: "http://registry.gitlab.example.com:4567"
 gitlab_git_data_dir: "/var/opt/gitlab/git-data"
 gitlab_edition: "gitlab-ce"
 gitlab_version: ''
