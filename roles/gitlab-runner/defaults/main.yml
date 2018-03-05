@@ -1,7 +1,7 @@
 ---
 # Change this variable value to 'gitlab-runner' for versions >= 10.x
 gitlab_runner_package_name: 'gitlab-runner'
-gitlab_runner_version: ''
+gitlab_runner_version: '10.5.0-1'
 
 # Maximum number of jobs to run concurrently
 gitlab_runner_concurrent: '{{ ansible_processor_vcpus }}'
