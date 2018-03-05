@@ -54,7 +54,7 @@ CentOS.
 At first, booting Vagrant VMs for GitLab and GitLab Runner is required.
 
 ```
-cd ~/vagrant/infra-ci
+cd ~/vagrant/infraci
 vagrant up gitlab
 vagrant up gitlab-runner
 ```
