@@ -26,9 +26,20 @@
     name: "{{ docker_package }}"
     state: "{{ docker_package_state }}"
 
+- name: copy docker.service file
+  copy:
+    remote_src: yes
+    src: /usr/lib/systemd/system/docker.service
+    dest: /etc/systemd/system/docker.service
+
+- replace:
+    path: /etc/systemd/system/docker.service
+    regexp: 'ExecStart=/usr/bin/dockerd'
+    replace: 'ExecStart=/usr/bin/dockerd --insecure-registry {{ docker_insecure_registry }}'
+
 - name: Ensure Docker is started and enabled at boot.
-  service:
+  systemd:
     name: docker
     state: started
-    enabled: yes
-
+    enabled: True
+    daemon_reload: yes

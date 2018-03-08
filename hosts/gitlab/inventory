@@ -4,3 +4,5 @@
 [gitlab:vars]
 ansible_ssh_user=vagrant
 ansible_ssh_private_key_file=~/vagrant/infraci/.vagrant/machines/gitlab/virtualbox/private_key
+gitlab_external_url=http://192.168.33.10
+gitlab_registry_external_url=http://192.168.33.10:4567

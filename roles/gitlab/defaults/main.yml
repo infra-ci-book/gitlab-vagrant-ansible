@@ -2,6 +2,8 @@
 # General config.
 gitlab_external_url: "http://localhost"
 gitlab_registry_external_url: "http://registry.gitlab.example.com:4567"
+gitlab_initial_root_password: "password"
+gitlab_initial_shared_runners_registration_token: "token-AABBCCDD"
 gitlab_git_data_dir: "/var/opt/gitlab/git-data"
 gitlab_edition: "gitlab-ce"
 gitlab_version: '10.5.1-ce.0.el7'

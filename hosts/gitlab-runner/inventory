@@ -7,4 +7,6 @@ ansible_ssh_private_key_file=~/vagrant/infraci/.vagrant/machines/gitlab-runner/v
 
 # Define gitlab runner url and token
 gitlab_runner_coordinator_url='http://192.168.33.10'
-gitlab_runner_registration_token=''
+gitlab_runner_registration_token='token-AABBCCDD'
+
+docker_insecure_registry='192.168.33.10:4567'
