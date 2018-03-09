@@ -29,7 +29,7 @@
 - name: Add insecure registry to systemd unit file.
   replace:
     path: /usr/lib/systemd/system/docker.service
-    regexp: 'ExecStart=/usr/bin/dockerd'
+    regexp: '^ExecStart=/usr/bin/dockerd$'
     replace: 'ExecStart=/usr/bin/dockerd --insecure-registry {{ docker_insecure_registry }}'
 
 - name: Ensure Docker is started and enabled at boot.
