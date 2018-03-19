@@ -62,3 +62,9 @@
   when:
     - configured_runners.stderr.find('\n' + gitlab_runner_description) == -1
     - run_gitlab_runner_register_command
+
+- name: Enable docker privileged on runner
+  replace:
+    path: /etc/gitlab-runner/config.toml
+    regexp: 'privileged = false$'
+    replace: 'privileged = true'
