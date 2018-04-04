@@ -1,6 +1,6 @@
 ---
-# Edition can be one of: 'ce' (Community Edition) or 'ee' (Enterprise Edition).
 docker_edition: 'ce'
+docker_version: '18.03.0.ce-1.el7.centos'
 docker_package: "docker-{{ docker_edition }}"
 docker_package_state: present
 docker_insecure_registry: localhost:4567

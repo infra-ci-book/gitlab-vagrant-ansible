@@ -21,10 +21,19 @@
     group: root
     mode: 0644
 
+- name: Define the Docker package name.
+  set_fact:
+    docker_package_name: "{{ docker_package }}-{{ docker_version }}"
+  when: docker_version != ''
+
 - name: Install Docker.
-  package:
-    name: "{{ docker_package }}"
+  yum:
+    name: "{{ docker_package_name | default(docker_package) }}"
     state: "{{ docker_package_state }}"
+  register: install_packages
+  until: install_packages|success
+  retries: 5
+  delay: 2
 
 - name: Add insecure registry to systemd unit file.
   replace:
