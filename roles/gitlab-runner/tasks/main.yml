@@ -26,15 +26,6 @@
     gitlab_runner_versioned_package_name: "{{ gitlab_runner_package_name }}{{ gitlab_runner_package_version_separator }}{{ gitlab_runner_version }}"
   when: gitlab_runner_version != ''
 
-- name: Install git
-  yum:
-    name: git
-    state: present
-  register: install_packages
-  until: install_packages|success
-  retries: 5
-  delay: 2
-
 - name: Install GitLab Runner
   yum:
     name: "{{ gitlab_runner_versioned_package_name | default(gitlab_runner_package_name) }}"
