@@ -30,6 +30,7 @@
   yum:
     name: "{{ gitlab_runner_versioned_package_name | default(gitlab_runner_package_name) }}"
     state: present
+    disable_gpg_check: yes
   register: install_packages
   until: install_packages|success
   retries: 5
