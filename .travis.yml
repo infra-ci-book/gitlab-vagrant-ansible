@@ -16,7 +16,7 @@ script:
   - ${PWD}/tests/test.sh
 
   # Test whether Docker is running correctly.
-  - 'docker exec --tty ${container_id} docker run hello-world'
+  - 'docker exec --tty ${container_id} docker info'
 
   # Make sure GitLab is running.
   - >
