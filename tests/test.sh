@@ -62,9 +62,9 @@ elif [ $distro = 'fedora24' ]; then
 fi
 
 # Run the container using the supplied OS.
-printf ${green}"Starting Docker container: geerlingguy/docker-$distro-ansible."${neutral}"\n"
-docker pull geerlingguy/docker-$distro-ansible:latest
-docker run --detach --volume="$PWD":/etc/ansible:rw --name $container_id $opts geerlingguy/docker-$distro-ansible:latest $init
+printf ${green}"Starting Docker container: irixjp/docker-$distro-ansible."${neutral}"\n"
+docker pull irixjp/docker-$distro-ansible:latest
+docker run --detach --volume="$PWD":/etc/ansible:rw --name $container_id $opts irixjp/docker-$distro-ansible:latest $init
 
 printf "\n"
 
